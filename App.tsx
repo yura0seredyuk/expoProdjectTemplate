@@ -1,20 +1,63 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, {useEffect} from 'react';
+import {StyleSheet, Text, View} from 'react-native';
+import { useFonts } from 'expo-font';
+import GlobalStyles from './app/styles/GlobalStyles';
 
-export default function App() {
+import {Provider, useDispatch, useSelector} from 'react-redux';
+import {Store} from './app/store/store';
+import {setLoading} from './app/store/actions/setLoading';
+
+const AppContent = () => {
+  const dispatch = useDispatch();
+  const loading = useSelector(state => state.userReducers);
+
+  useEffect(() => {
+    dispatch(setLoading(false));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    console.log(loading);
+  }, [loading]);
+
+  const [loaded] = useFonts({
+    'RobotoThin': require('./app/assets/fonts/Roboto-Thin.ttf'),
+    'RobotoLight': require('./app/assets/fonts/Roboto-Light.ttf'),
+    'RobotoRegular': require('./app/assets/fonts/Roboto-Regular.ttf'),
+    'RobotoMedium': require('./app/assets/fonts/Roboto-Medium.ttf'),
+    'RobotoBold': require('./app/assets/fonts/Roboto-Bold.ttf'),
+    'RobotoBlack': require('./app/assets/fonts/Roboto-Black.ttf'),
+  });
+
+  if (!loaded) {
+    return null;
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+      <View style={styles.root}>
+        <Text style={[GlobalStyles.text, styles.text]}>Hello</Text>
+      </View>
   );
-}
+};
+
+const App = () => {
+  return (
+      <Provider store={Store}>
+        <AppContent />
+      </Provider>
+  );
+};
 
 const styles = StyleSheet.create({
-  container: {
+  root: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
     justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#ffffff',
+  },
+  text: {
+    fontSize: 25,
   },
 });
+
+export default App;
