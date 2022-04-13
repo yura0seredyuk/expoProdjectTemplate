@@ -3,13 +3,13 @@ import {StyleSheet, Text, View} from 'react-native';
 import { useFonts } from 'expo-font';
 import GlobalStyles from './app/styles/GlobalStyles';
 
-import {Provider, useDispatch, useSelector} from 'react-redux';
+import {Provider, useDispatch, useSelector, RootStateOrAny} from 'react-redux';
 import {Store} from './app/store/store';
 import {setLoading} from './app/store/actions/setLoading';
 
 const AppContent = () => {
   const dispatch = useDispatch();
-  const loading = useSelector(state => state.userReducers);
+  const loading = useSelector((state: RootStateOrAny) => state.userReducers);
 
   useEffect(() => {
     dispatch(setLoading(false));
