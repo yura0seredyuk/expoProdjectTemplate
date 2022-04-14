@@ -7,6 +7,15 @@ import {Provider, useDispatch, useSelector, RootStateOrAny} from 'react-redux';
 import {Store} from './app/store/store';
 import {setLoading} from './app/store/actions/setLoading';
 
+import * as Localization from 'expo-localization';
+import i18n from 'i18n-js';
+
+import languages from "./app/translations";
+
+i18n.fallbacks = true;
+i18n.translations = languages;
+i18n.locale = Localization.locale;
+
 const AppContent = () => {
   const dispatch = useDispatch();
   const loading = useSelector((state: RootStateOrAny) => state.userReducers);
@@ -35,7 +44,7 @@ const AppContent = () => {
 
   return (
       <View style={styles.root}>
-        <Text style={[GlobalStyles.text, styles.text]}>Hello</Text>
+        <Text style={[GlobalStyles.text, styles.text]}>{i18n.t('hello')}</Text>
       </View>
   );
 };
