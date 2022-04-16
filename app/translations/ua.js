@@ -1,5 +1,5 @@
 const ua = {
-    hello: 'Привіт'
+    welcome: 'Вітаємо'
 };
 
 export default ua;

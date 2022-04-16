@@ -1,11 +1,13 @@
 import React, {useEffect} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
 import { useFonts } from 'expo-font';
-import GlobalStyles from './app/styles/GlobalStyles';
 
 import {Provider, useDispatch, useSelector, RootStateOrAny} from 'react-redux';
 import {Store} from './app/store/store';
 import {setLoading} from './app/store/actions/setLoading';
+
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import * as Localization from 'expo-localization';
 import i18n from 'i18n-js';
@@ -16,9 +18,17 @@ i18n.fallbacks = true;
 i18n.translations = languages;
 i18n.locale = Localization.locale;
 
+const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
+
+import Main from "./app/pages/Main";
+import WelcomePage from "./app/pages/Welcome";
+import FormPage from "./app/pages/Form";
+import CreatePassword from "./app/pages/CreatePassword";
+
 const AppContent = () => {
   const dispatch = useDispatch();
-  const loading = useSelector((state: RootStateOrAny) => state.userReducers);
+  const { loading, authorized } = useSelector((state: RootStateOrAny) => state.userReducers);
 
   useEffect(() => {
     dispatch(setLoading(false));
@@ -26,8 +36,9 @@ const AppContent = () => {
   }, []);
 
   useEffect(() => {
-    console.log(loading);
-  }, [loading]);
+    console.log('loading', loading);
+    console.log('authorized', authorized)
+  }, [loading, authorized]);
 
   const [loaded] = useFonts({
     'RobotoThin': require('./app/assets/fonts/Roboto-Thin.ttf'),
@@ -43,30 +54,30 @@ const AppContent = () => {
   }
 
   return (
-      <View style={styles.root}>
-        <Text style={[GlobalStyles.text, styles.text]}>{i18n.t('hello')}</Text>
-      </View>
+      authorized ? (
+              <NavigationContainer>
+                  <Tab.Navigator>
+                      <Tab.Screen name="App" component={Main} />
+                  </Tab.Navigator>
+              </NavigationContainer>
+        ) : (
+            <NavigationContainer>
+              <Stack.Navigator>
+                <Stack.Screen name="Welcome" component={WelcomePage} />
+                <Stack.Screen name="Form" component={FormPage} />
+                <Stack.Screen name='CreatePassword' component={CreatePassword} />
+              </Stack.Navigator>
+            </NavigationContainer>
+        )
   );
 };
 
 const App = () => {
   return (
       <Provider store={Store}>
-        <AppContent />
+        <AppContent/>
       </Provider>
   );
 };
-
-const styles = StyleSheet.create({
-  root: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#ffffff',
-  },
-  text: {
-    fontSize: 25,
-  },
-});
 
 export default App;
