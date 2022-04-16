@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import { useFonts } from 'expo-font';
 
 import {Provider, useDispatch, useSelector, RootStateOrAny} from 'react-redux';
@@ -26,13 +26,32 @@ import WelcomePage from "./app/pages/Welcome";
 import FormPage from "./app/pages/Form";
 import CreatePassword from "./app/pages/CreatePassword";
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const AppContent = () => {
   const dispatch = useDispatch();
+  const [storageAuthorized, setStorageAuthorized] = useState(false);
   const { loading, authorized } = useSelector((state: RootStateOrAny) => state.userReducers);
+
+  const getAuth = async () => {
+      try {
+          const auth = await AsyncStorage.getItem('@authorized');
+          if (auth !== null) {
+              return auth;
+          }
+      } catch (e) {
+          console.log(e);
+      }
+  }
 
   useEffect(() => {
     dispatch(setLoading(false));
     // eslint-disable-next-line react-hooks/exhaustive-deps
+    getAuth().then((value) => {
+        if (value === 'true') {
+            setStorageAuthorized(false); // TODO: SET TO TRUE
+        }
+    })
   }, []);
 
   useEffect(() => {
@@ -54,7 +73,7 @@ const AppContent = () => {
   }
 
   return (
-      authorized ? (
+      authorized || storageAuthorized ? (
               <NavigationContainer>
                   <Tab.Navigator>
                       <Tab.Screen name="App" component={Main} />

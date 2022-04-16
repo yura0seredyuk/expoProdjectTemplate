@@ -4,6 +4,8 @@ import {setAuthorized} from "../../store/actions/setAuthorized";
 import {Formik} from "formik";
 import GlobalStyles from "../../styles/GlobalStyles";
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const CreatePassword = () => {
     const dispatch = useDispatch();
 
@@ -11,9 +13,10 @@ const CreatePassword = () => {
         password: ''
     }
 
-    const handleSubmit = (values : { password: string }) => {
+    const handleSubmit = async (values : { password: string }) => {
         console.log(values);
         dispatch(setAuthorized(true));
+        await AsyncStorage.setItem('@authorized', 'true');
     };
 
     return (
