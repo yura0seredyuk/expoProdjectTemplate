@@ -9,6 +9,16 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
+import * as Notifications from "expo-notifications";
+
+Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+        shouldShowAlert: true,
+        shouldPlaySound: false,
+        shouldSetBadge: false,
+    }),
+});
+
 import * as Localization from 'expo-localization';
 import i18n from 'i18n-js';
 
@@ -49,7 +59,7 @@ const AppContent = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     getAuth().then((value) => {
         if (value === 'true') {
-            setStorageAuthorized(false); // TODO: SET TO TRUE
+            setStorageAuthorized(true); // TODO: SET TO TRUE
         }
     })
   }, []);
