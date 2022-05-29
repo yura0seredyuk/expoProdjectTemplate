@@ -1,6 +1,7 @@
-import {Button, StyleSheet, Text, View} from "react-native";
-import GlobalStyles from "../../styles/GlobalStyles";
-import StartingForm from "../../components/StartingForm";
+import { Button, StyleSheet, Text, View } from 'react-native';
+import GlobalStyles from '../../styles/GlobalStyles';
+import GlobalColor from '../../styles/GlobalColor';
+import StartingForm from '../../components/StartingForm';
 
 const FormPage = ({ navigation } : { navigation: any }) => {
     const handlePress = () => {
@@ -8,8 +9,8 @@ const FormPage = ({ navigation } : { navigation: any }) => {
     }
 
     return (
-        <View style={GlobalStyles.root}>
-            <Text style={[GlobalStyles.text, styles.text]}>Form page</Text>
+        <View style={[GlobalStyles.root, GlobalColor.backgroundMain]}>
+            <Text style={styles.text}>Form page</Text>
             <StartingForm navigation={navigation}/>
             <Button title='Skip' onPress={handlePress} />
         </View>

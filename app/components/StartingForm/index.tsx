@@ -1,6 +1,7 @@
-import {StyleSheet} from "react-native";
-import {Formik} from "formik";
-import {Button, TextInput, View} from "react-native";
+import { StyleSheet } from 'react-native';
+import { Formik } from 'formik';
+import { TextInput, View } from 'react-native';
+import ButtonPrimary from '../ButtonPrimary/ButtonPrimary';
 
 const StartingForm = ({ navigation } : { navigation: any }) => {
   const initialValues = {
@@ -33,7 +34,7 @@ const StartingForm = ({ navigation } : { navigation: any }) => {
                   maxLength={50}
                   placeholder='Email'
               />
-              <Button title='Continue' onPress={() => handleSubmit()} />
+              <ButtonPrimary text='Continue' handlePress={handleSubmit} page='loginForm'/>
             </View>
         )}
       </Formik>

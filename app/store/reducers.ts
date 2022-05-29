@@ -5,7 +5,7 @@ const initialState = {
   authorized: false
 };
 
-function userReducers(state = initialState, action) {
+function userReducers(state = initialState, action: { type: any; payload: any; }) {
   switch (action.type) {
     case SET_LOADING:
       return {...state, loading: action.payload};

@@ -1,8 +1,9 @@
-import {Button, TextInput, View} from "react-native";
-import {useDispatch} from "react-redux";
-import {setAuthorized} from "../../store/actions/setAuthorized";
-import {Formik} from "formik";
-import GlobalStyles from "../../styles/GlobalStyles";
+import {Button, TextInput, View} from 'react-native';
+import {useDispatch} from 'react-redux';
+import {setAuthorized} from '../../store/actions/setAuthorized';
+import {Formik} from 'formik';
+import GlobalStyles from '../../styles/GlobalStyles';
+import GlobalColor from '../../styles/GlobalColor';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -22,7 +23,7 @@ const CreatePassword = () => {
     return (
         <Formik initialValues={initialState} onSubmit={handleSubmit}>
             {({ handleChange, handleBlur, handleSubmit, values }) => (
-                <View style={GlobalStyles.root}>
+                <View style={[GlobalStyles.root, GlobalColor.backgroundMain]}>
                     <TextInput
                         value={values.password}
                         onChangeText={handleChange('password')}

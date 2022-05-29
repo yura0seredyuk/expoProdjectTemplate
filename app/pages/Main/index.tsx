@@ -1,10 +1,10 @@
-import {Button, Text, View} from "react-native";
-import {StyleSheet} from "react-native";
-import GlobalStyles from "../../styles/GlobalStyles";
-import React, {useEffect, useRef, useState} from "react";
-import * as Notifications from "expo-notifications";
-import registerForPushNotificationsAsync from "../../utils/registerForPushNotificationsAsync";
-import schedulePushNotification from "../../utils/schedulePushNotification";
+import React, { useEffect, useRef, useState } from 'react';
+import { Button, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
+import GlobalStyles from '../../styles/GlobalStyles';
+import * as Notifications from 'expo-notifications';
+import registerForPushNotificationsAsync from '../../utils/registerForPushNotificationsAsync';
+import schedulePushNotification from '../../utils/schedulePushNotification';
 
 const Main = () => {
     const [expoPushToken, setExpoPushToken] = useState<any>('');
@@ -38,7 +38,7 @@ const Main = () => {
                 <Text>Data: {Object.keys(notification).length && JSON.stringify(notification.request.content.data)}</Text>
             </View>
             <Button
-                title="Press to schedule a notification"
+                title='Press to schedule a notification'
                 onPress={async () => {
                     await schedulePushNotification({
                         title: 'You\'ve got mail!',

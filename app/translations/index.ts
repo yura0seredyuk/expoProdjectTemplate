@@ -1,5 +1,5 @@
-import ua from "./ua";
-import en from "./en"
+import ua from './ua';
+import en from './en'
 
 const languages = { ua, en }
 
